@@ -1,21 +1,50 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import MessageList from './MessageList';
+import MessageInput from './MessageInput';
 import './App.scss';
-import Message from './Message';
+
 
 function App() {
-  const [inputText, setInputText] = useState('');
 
-  return (
-    <div className="App">
-      <h1>HomeWork №1</h1>
+  const [inputMessage, setInputMessage] = useState('');
+  const [messagesArray, setMessagesArray] = useState([]);
+  const [botMessagesArray, setBotMessagesArray] = useState([]);
 
-      <p>🔽Write your message here🔽</p>
+  const onSendMessage = () => {
+    const trimmedMessageText = inputMessage.trim();
 
-      <input className="Input" value={inputText} onChange={(e) => setInputText(e.target.value)} />
+    if (trimmedMessageText !== '') {
+      setMessagesArray(prev => [...prev,
+      {
+        trimmedMessageText,
+        author: 'Илья Алексин',
+      },
+      ]);
+      setInputMessage('');
+    };
+  };
 
-      <Message textToShow={inputText} />
-    </div>
-  );
-}
+  useEffect(() => {
+    if (messagesArray.length > 0) {
+      setTimeout(() => {
+        console.log('Сообщение отправлено!😊👌');
 
+        setBotMessagesArray(() => [
+          {
+            botMessage: 'Сообщение отправлено!😊👌',
+            author: 'Chat-bot Василий',
+          },
+        ]);
+      }, 1500);
+    };
+  }, [botMessagesArray, messagesArray.length]);
+
+  return <div className='mainWrapper'>
+
+    <MessageList messagesArray={messagesArray} botMessagesArray={botMessagesArray} />
+
+    <MessageInput inputMessage={inputMessage} setInputMessage={setInputMessage} onSendMessage={onSendMessage} />
+
+  </div >
+};
 export default App;

@@ -1,22 +1,15 @@
-.App {
-  text-align: center;
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-
-  .Input {
-    background-color: #282c34;
-    border: 2px solid white;
-    outline: none;
-    color: white;
-    height: 5vh;
-    width: 30vw;
-    margin-bottom: 20px;
-    font-size: calc(10px + 2vmin);
-  }
+.mainWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 90vw;
+    height: 95vh;
+    position: relative;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    overflow: hidden;
+    z-index: 10;
+    backdrop-filter: blur(15px);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.2);
 }

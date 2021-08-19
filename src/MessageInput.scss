@@ -1,0 +1,28 @@
+.inputWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+    width: 100%;
+
+    .input {
+        outline: none;
+        border: none;
+        height: 40px;
+        font-family: 'Roboto';
+        font-size: 16px;
+        font-weight: 300;
+        width: 100%;
+        padding-left: 15px;
+        background: transparent;
+        color: #fff;
+        border-right: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .sendButton {
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 5px 8px 0px 8px;
+    }
+}
