@@ -37,7 +37,7 @@ function App() {
         ]);
       }, 1500);
     };
-  }, [botMessagesArray, messagesArray.length]);
+  }, [setBotMessagesArray, messagesArray]);
 
   return <div className='mainWrapper'>
 
