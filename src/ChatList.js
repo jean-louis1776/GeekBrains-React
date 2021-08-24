@@ -27,7 +27,7 @@ const ChatList = (chatList) => {
             return (<>
                 <ListItem alignItems="flex-start" button key={i}>
                     <ListItemAvatar>
-                        <Avatar />
+                        <Avatar src={chat.avatar} />
                     </ListItemAvatar>
                     <ListItemText
                         primary={chat.chatName}

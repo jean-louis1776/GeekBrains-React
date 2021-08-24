@@ -11,18 +11,21 @@ function App() {
   const [messagesArray, setMessagesArray] = useState([]);
 
   const chatArray = [{
+    avatar: './img/1.jpg',
     chatName: 'Brunch this weekend?',
     id: 'Ali Connors',
     chatText: ` — I'll be in your neighborhood doing errands this…`
   },
   {
-    chatName: 'Jake',
-    id: 'Consectetur adipisicing elit. Possimus, nam.',
+    avatar: './img/2.jpg',
+    chatName: 'Summer BBQ',
+    id: 'to Scott, Alex, Jennifer',
     chatText: ` — Wish I could come, but I'm out of town this…`
   },
   {
-    chatName: 'Daine',
-    id: 'Sunt ipsum quam aut unde optio! Atque.',
+    avatar: './img/3.jpg',
+    chatName: 'Oui Oui',
+    id: 'Sandra Adams',
     chatText: ` — Do you have Paris recommendations? Have you ever…`
   },
   ];
