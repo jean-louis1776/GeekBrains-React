@@ -1,9 +1,11 @@
 .messageList {
     width: 100%;
-    height: 95%;
+    height: 100%;
     padding: 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     overflow: auto;
+    background-image: url(../img/chat_background.jpg);
+    background-size: cover;
 
     .myMessageBlock {
         margin-bottom: 15px;
@@ -19,15 +21,16 @@
             font-size: 13px;
             color: #fff;
             width: fit-content;
+            user-select: none;
         }
 
         .myMessage {
             font-weight: 300;
             color: #fff;
-            border-radius: 11.5px;
+            border-radius: 5px;
             padding: 5px;
             width: fit-content;
-            background-color: rgba(110, 110, 110, 0.5);
+            background-color: #43a047;
         }
     }
 
@@ -45,15 +48,16 @@
             font-size: 13px;
             color: #fff;
             width: fit-content;
+            user-select: none;
         }
 
         .botMessage {
             font-weight: 300;
             color: #fff;
-            border-radius: 11.5px;
+            border-radius: 5px;
             padding: 5px;
             width: fit-content;
-            background-color: rgba(110, 110, 110, 0.5);
+            background-color: rgb(100, 100, 100);
         }
     }
 }
