@@ -14,6 +14,9 @@ const useStyles = makeStyles((theme) => ({
         maxWidth: '36ch',
         backgroundColor: theme.palette.background.paper,
     },
+    ListItemText: {
+        color: '#fff',
+    },
     inline: {
         display: 'inline',
     },
@@ -31,6 +34,7 @@ const ChatList = (chatList) => {
                     </ListItemAvatar>
                     <ListItemText
                         primary={chat.chatName}
+                        className={classes.ListItemText}
                         secondary={
                             <React.Fragment>
                                 <Typography

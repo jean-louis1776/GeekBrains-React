@@ -32,8 +32,9 @@ const MessageInput = ({ inputMessage, setInputMessage, onSendMessage }) => {
                 value={inputMessage}
                 autoFocus={true}
                 onChange={e => setInputMessage(e.target.value)}
-                onKeyDown={({ key }) => {
-                    if (key === 'Enter') {
+                onKeyDown={(e) => {
+                    if (!e.shiftKey && e.key === 'Enter') {
+                        e.preventDefault();
                         onSendMessage();
                     }
                 }}

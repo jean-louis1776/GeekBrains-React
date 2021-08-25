@@ -10,7 +10,7 @@ const MessageList = ({ messagesArray }) => {
 
                     return (
                         <div className={isMessageFromBot ? 'botMessageBlock' : 'myMessageBlock'} key={i}>
-                            <div className={isMessageFromBot ? 'botMessageTag' : 'myMessageTag'}>{message.author}, {message.time}</div>
+                            <div className={isMessageFromBot ? 'botMessageTag' : 'myMessageTag'}>{message.author} <br /> {message.time}</div>
                             <div className={isMessageFromBot ? 'botMessage' : 'myMessage'} > {message.trimmedMessageText}</div>
                         </div >
                     )
