@@ -149,22 +149,13 @@ const AppBar = () => {
 
             <MenuItem>
                 <Link to='/chat' className={classes.links}>
-                    <IconButton aria-label="show 4 new mails" color="inherit">
+                    <IconButton aria-label="show new mails" color="inherit">
                         <Badge color="secondary">
                             <MailIcon />
                         </Badge>
                     </IconButton>
-
                     <span>Сообщения</span>
                 </Link>
-            </MenuItem>
-            <MenuItem>
-                <IconButton aria-label="show 11 new notifications" color="inherit">
-                    <Badge color="secondary">
-                        <NotificationsIcon />
-                    </Badge>
-                </IconButton>
-                <span>Уведомления</span>
             </MenuItem>
             <MenuItem onClick={handleProfileMenuOpen}>
                 <IconButton
@@ -205,11 +196,6 @@ const AppBar = () => {
                                 </Badge>
                             </IconButton>
                         </Link>
-                        <IconButton aria-label="show new notifications" color="inherit">
-                            <Badge color="secondary">
-                                <NotificationsIcon />
-                            </Badge>
-                        </IconButton>
                         <IconButton
                             edge="end"
                             aria-label="account of current user"
