@@ -8,6 +8,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -15,7 +17,7 @@ const useStyles = makeStyles(() => ({
         maxWidth: '36ch',
     },
     ListItemText: {
-        color: '#fff',
+        // color: '#fff',
     },
     inline: {
         display: 'inline',
@@ -28,7 +30,7 @@ const ChatList = (chatList) => {
     return <List className={classes.root}>
         {chatList.chatArray.map((chat, i) =>
         (<div key={i}>
-            <ListItem alignItems="flex-start" button>
+            <ListItem alignItems="flex-start" button className={classes.listItem}>
                 <ListItemAvatar>
                     <Avatar src={chat.avatar} />
                 </ListItemAvatar>
@@ -49,6 +51,9 @@ const ChatList = (chatList) => {
                         </React.Fragment>
                     }
                 />
+                <IconButton aria-label="delete" className={classes.deleteButton}>
+                    <DeleteIcon fontSize="small" />
+                </IconButton>
             </ListItem>
             <Divider variant="inset" component="li" />
         </div>

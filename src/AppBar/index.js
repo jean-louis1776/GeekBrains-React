@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from "prop-types";
-import { alpha, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { AppBar as MaterialUiAppBar } from '@material-ui/core';
 import Toolbar from '@material-ui/core/Toolbar';
 import { Link } from 'react-router-dom';
@@ -17,10 +17,15 @@ const useStyles = makeStyles((theme) => ({
     links: {
         textDecoration: 'none',
         height: '100%',
+        color: theme.palette.background.paper,
+    },
+    dropLinks: {
+        textDecoration: 'none',
         color: theme.palette.text.primary,
     },
     linkButton: {
         padding: '16px 8px',
+        color: '#fff'
     },
     grow: {
         flexGrow: 1,
@@ -33,30 +38,6 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up('sm')]: {
             display: 'block',
         },
-    },
-    search: {
-        position: 'relative',
-        borderRadius: theme.shape.borderRadius,
-        backgroundColor: alpha(theme.palette.common.white, 0.15),
-        '&:hover': {
-            backgroundColor: alpha(theme.palette.common.white, 0.25),
-        },
-        marginRight: theme.spacing(2),
-        marginLeft: 0,
-        width: '100%',
-        [theme.breakpoints.up('sm')]: {
-            marginLeft: theme.spacing(3),
-            width: 'auto',
-        },
-    },
-    searchIcon: {
-        padding: theme.spacing(0, 2),
-        height: '100%',
-        position: 'absolute',
-        pointerEvents: 'none',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
     },
     inputRoot: {
         color: 'inherit',
@@ -83,6 +64,9 @@ const useStyles = makeStyles((theme) => ({
             display: 'none',
         },
     },
+    MailIcon: {
+        color: theme.palette.background.paper,
+    }
 }));
 
 const AppBar = () => {
@@ -124,7 +108,7 @@ const AppBar = () => {
             onClose={handleMenuClose}
         >
             <MenuItem onClick={handleMenuClose}>
-                <Link to='/profile' className={classes.links}>
+                <Link to='/profile' className={classes.dropLinks}>
                     Профиль
                 </Link>
             </MenuItem>
@@ -147,7 +131,7 @@ const AppBar = () => {
         >
 
             <MenuItem>
-                <Link to='/chat' className={classes.links}>
+                <Link to='/chat' className={classes.dropLinks}>
                     <IconButton aria-label="show new mails" color="inherit">
                         <Badge color="secondary">
                             <MailIcon />
@@ -190,9 +174,7 @@ const AppBar = () => {
                     <div className={classes.sectionDesktop}>
                         <Link to='/chat' className={classes.links}>
                             <IconButton aria-label="show new mails" color="inherit">
-                                <Badge color="secondary">
-                                    <MailIcon />
-                                </Badge>
+                                <MailIcon />
                             </IconButton>
                         </Link>
                         <IconButton
