@@ -63,10 +63,10 @@ const Profile = () => {
         setOpenModal(false);
     };
 
-    const [value, setValue] = React.useState('');
+    const [valueRadio, setValueRadio] = React.useState('');
 
     const handleChangeRadio = (event) => {
-        setValue(event.target.value);
+        setValueRadio(event.target.value);
     };
 
     const [state, setState] = React.useState({
@@ -196,7 +196,7 @@ const Profile = () => {
 
                 <FormControl component="fieldset" className={classes.formControl}>
                     <FormLabel component="legend">Ваш род занятий</FormLabel>
-                    <RadioGroup aria-label="gender" name="gender1" value={value} onChange={handleChangeRadio}>
+                    <RadioGroup aria-label="gender" name="gender1" value={valueRadio} onChange={handleChangeRadio}>
                         <FormControlLabel value="it" control={<Radio />} label="Программирование" />
                         <FormControlLabel value="design" control={<Radio />} label="Дизайн" />
                         <FormControlLabel value="management" control={<Radio />} label="Менеджмент" />
