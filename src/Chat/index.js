@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import MessageList from './MessageList';
 import MessageInput from './MessageInput';
 import ChatList from './ChatList';
@@ -6,11 +6,14 @@ import firstAvatar from '../img/1.jpg';
 import secondAvatar from '../img/2.jpg';
 import thirdAvatar from '../img/3.jpg';
 import '../styles/styles.css';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { addMessage } from './chatSlice'
 
 function Chat() {
+  // const [messagesArray, setMessagesArray] = useState([]);
 
-  const [messagesArray, setMessagesArray] = useState([]);
+  const dispatch = useDispatch();
+  const { messagesArray } = useSelector(state => state.chat);
 
   const chatArray = [{
     avatar: firstAvatar,
@@ -36,23 +39,18 @@ function Chat() {
     const trimmedMessageText = messageText.trim();
 
     if (trimmedMessageText !== '') {
-      setMessagesArray(prev => [...prev,
-      {
+      dispatch(addMessage({
         trimmedMessageText,
         author: 'Илья Алексин',
         time: new Date().toLocaleString()
-      },
-      ]);
+      }));
 
       setTimeout(() => {
-        setMessagesArray((prev) => [
-          ...prev,
-          {
-            trimmedMessageText: 'Сообщение отправлено!😊👌',
-            author: 'Chat-bot Василий',
-            time: new Date().toLocaleString()
-          },
-        ]);
+        dispatch(addMessage({
+          trimmedMessageText: 'Сообщение отправлено!😊👌',
+          author: 'Chat-bot Василий',
+          time: new Date().toLocaleString()
+        }));
       }, 1000);
     };
   };

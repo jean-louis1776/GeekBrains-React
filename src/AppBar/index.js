@@ -156,7 +156,7 @@ const AppBar = () => {
 
     return (
         <div className={classes.grow}>
-            <MaterialUiAppBar>
+            <MaterialUiAppBar position='static'>
                 <Toolbar>
                     <Link to='/' className={classes.links}>
                         <Button className={classes.linkButton}>
