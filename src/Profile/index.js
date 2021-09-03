@@ -1,12 +1,7 @@
 import React from 'react';
 import '../styles/styles.css';
 import { makeStyles } from '@material-ui/core/styles';
-import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -16,8 +11,6 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
 import { useSelector, useDispatch } from 'react-redux';
 import { yourName, yourAge } from './profileSlice'
 
@@ -62,26 +55,6 @@ const Profile = () => {
     const handleClose = () => {
         setOpenModal(false);
     };
-
-    const [value, setValue] = React.useState('');
-
-    const handleChangeRadio = (event) => {
-        setValue(event.target.value);
-    };
-
-    const [state, setState] = React.useState({
-        guitar: false,
-        sport: false,
-        movies: false,
-        travels: false,
-        games: false,
-    });
-
-    const handleChangeCheckbox = (event) => {
-        setState({ ...state, [event.target.name]: event.target.checked });
-    };
-
-    const { guitar, sport, movies, travels, games } = state;
 
     return (
         <div className='profileWrapper'>
@@ -165,47 +138,6 @@ const Profile = () => {
                     </Button>
                 </DialogActions>
             </Dialog>
-
-            <div className={classes.root}>
-                <FormControl component="fieldset" className={classes.formControl}>
-                    <FormLabel component="legend">Ваше хобби</FormLabel>
-                    <FormGroup>
-                        <FormControlLabel
-                            control={<Checkbox checked={guitar} onChange={handleChangeCheckbox} name="guitar" />}
-                            label="Играть на гитаре"
-                        />
-                        <FormControlLabel
-                            control={<Checkbox checked={sport} onChange={handleChangeCheckbox} name="sport" />}
-                            label="Заниматься спортом"
-                        />
-                        <FormControlLabel
-                            control={<Checkbox checked={movies} onChange={handleChangeCheckbox} name="movies" />}
-                            label="Фильмы и сериалы"
-                        />
-                        <FormControlLabel
-                            control={<Checkbox checked={travels} onChange={handleChangeCheckbox} name="travels" />}
-                            label="Путешествия"
-                        />
-                        <FormControlLabel
-                            control={<Checkbox checked={games} onChange={handleChangeCheckbox} name="games" />}
-                            label="Видеоигры"
-                        />
-                    </FormGroup>
-                    <FormHelperText>Можно несколько вариантов</FormHelperText>
-                </FormControl>
-
-                <FormControl component="fieldset" className={classes.formControl}>
-                    <FormLabel component="legend">Ваш род занятий</FormLabel>
-                    <RadioGroup aria-label="gender" name="gender1" value={value} onChange={handleChangeRadio}>
-                        <FormControlLabel value="it" control={<Radio />} label="Программирование" />
-                        <FormControlLabel value="design" control={<Radio />} label="Дизайн" />
-                        <FormControlLabel value="management" control={<Radio />} label="Менеджмент" />
-                        <FormControlLabel value="bank" control={<Radio />} label="Банковское дело" />
-                        <FormControlLabel value="other" control={<Radio />} label="Другое..." />
-                    </RadioGroup>
-                    <FormHelperText>Выберите один вариант</FormHelperText>
-                </FormControl>
-            </div>
         </div>
     );
 };

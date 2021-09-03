@@ -12,7 +12,7 @@ export const profileSlice = createSlice({
         },
         yourAge: (state, action) => {
             state.userAge.push(action.payload);
-        }
+        },
     }
 });
 
