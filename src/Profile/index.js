@@ -12,7 +12,7 @@ import Input from '@material-ui/core/Input';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import { useSelector, useDispatch } from 'react-redux';
-import { yourName, yourAge } from './profileSlice'
+import { yourName, yourAge } from './profileSlice';
 
 const useStyles = makeStyles((theme) => ({
     root: {
