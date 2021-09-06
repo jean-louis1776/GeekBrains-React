@@ -1,214 +1,185 @@
-import React from 'react';
-import PropTypes from "prop-types";
-import { makeStyles } from '@material-ui/core/styles';
-import { AppBar as MaterialUiAppBar } from '@material-ui/core';
-import Toolbar from '@material-ui/core/Toolbar';
-import { Link } from 'react-router-dom';
-import { Button } from '@material-ui/core';
-import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
-import MoreIcon from '@material-ui/icons/MoreVert';
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Box from "@material-ui/core/Box";
+import { Link, useLocation, useHistory } from "react-router-dom";
+import { alpha, makeStyles } from "@material-ui/core/styles";
+import Drawer from "@material-ui/core/Drawer";
+import MenuIcon from "@material-ui/icons/Menu";
+import IconButton from "@material-ui/core/IconButton";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import SearchIcon from "@material-ui/icons/Search";
+import ChatPreview from "./ChatPreview";
+import InputBase from '@material-ui/core/InputBase';
 
 const useStyles = makeStyles((theme) => ({
-    links: {
-        textDecoration: 'none',
-        height: '100%',
-        color: theme.palette.background.paper,
+  link: {
+    marginRight: "15px",
+    color: theme.palette.background.default,
+    textDecoration: "none",
+  },
+
+  dropLinks: {
+    textDecoration: 'none',
+    color: theme.palette.text.primary,
+  },
+
+  appBar: {
+    marginBottom: "15px",
+  },
+
+  root: {
+    marginRight: "350px",
+  },
+
+  mainWrapper: {
+    width: "350px",
+    height: "100%",
+    padding: "10px 10px 0px 10px",
+  },
+
+  topComponent: {
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+
+  input: {
+    "& div": {
+      borderRadius: "40px",
+      "& input": {
+        padding: "10px 10px",
+      },
     },
-    dropLinks: {
-        textDecoration: 'none',
-        color: theme.palette.text.primary,
+  },
+
+  chatWrapper: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+
+  search: {
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    '&:hover': {
+      backgroundColor: alpha(theme.palette.common.white, 0.25),
     },
-    linkButton: {
-        padding: '16px 8px',
-        color: '#fff'
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(1),
+      width: 'auto',
     },
-    grow: {
-        flexGrow: 1,
+  },
+  searchIcon: {
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  inputRoot: {
+    color: 'inherit',
+  },
+  inputInput: {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      width: '12ch',
+      '&:focus': {
+        width: '20ch',
+      },
     },
-    menuButton: {
-        marginRight: theme.spacing(2),
-    },
-    title: {
-        display: 'none',
-        [theme.breakpoints.up('sm')]: {
-            display: 'block',
-        },
-    },
-    inputRoot: {
-        color: 'inherit',
-    },
-    inputInput: {
-        padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
-        paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-        transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('md')]: {
-            width: '20ch',
-        },
-    },
-    sectionDesktop: {
-        display: 'none',
-        [theme.breakpoints.up('md')]: {
-            display: 'flex',
-        },
-    },
-    sectionMobile: {
-        display: 'flex',
-        [theme.breakpoints.up('md')]: {
-            display: 'none',
-        },
-    },
-    MailIcon: {
-        color: theme.palette.background.paper,
-    }
+  },
 }));
 
+const routes = [
+  {
+    pathTitle: "Home",
+    path: "/home",
+  },
+  { pathTitle: "Chat", path: "/chat" },
+  { pathTitle: "Playground", path: "/playground" },
+  { pathTitle: "Profile", path: "/profile" },
+];
+
 const AppBar = () => {
+  const classes = useStyles();
+  const location = useLocation();
+  const history = useHistory();
 
-    const classes = useStyles();
+  const { chats } = useSelector((state) => state.chat);
 
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
 
-    const isMenuOpen = Boolean(anchorEl);
-    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
 
-    const handleProfileMenuOpen = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
-    const handleMobileMenuClose = () => {
-        setMobileMoreAnchorEl(null);
-    };
+  return (
+    <Drawer
+      variant="permanent"
+      open
+      classes={{ paper: classes.mainWrapper, root: classes.root }}
+    >
+      <Box className={classes.topComponent}>
+        <IconButton onClick={handleClick}>
+          <MenuIcon />
+        </IconButton>
 
-    const handleMenuClose = () => {
-        setAnchorEl(null);
-        handleMobileMenuClose();
-    };
-
-    const handleMobileMenuOpen = (event) => {
-        setMobileMoreAnchorEl(event.currentTarget);
-    };
-
-    const menuId = 'AppBarMenu';
-    const renderMenu = (
         <Menu
-            anchorEl={anchorEl}
-            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-            id={menuId}
-            keepMounted
-            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-            open={isMenuOpen}
-            onClose={handleMenuClose}
+          id="menu"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
+          anchorPosition={{ top: 50, left: 25 }}
+          anchorReference={"anchorPosition"}
         >
-            <MenuItem onClick={handleMenuClose}>
-                <Link to='/profile' className={classes.dropLinks}>
-                    Профиль
-                </Link>
-            </MenuItem>
-            <MenuItem onClick={handleMenuClose}>
-                Выйти
-            </MenuItem>
+          <MenuItem key={1}>
+            <Link to='/profile' className={classes.dropLinks}>
+              Профиль
+            </Link>
+          </MenuItem>
+          <MenuItem key={2}>Настройки</MenuItem>
         </Menu>
-    );
 
-    const mobileMenuId = 'AppBarMenu-mobile';
-    const renderMobileMenu = (
-        <Menu
-            anchorEl={mobileMoreAnchorEl}
-            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-            id={mobileMenuId}
-            keepMounted
-            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-            open={isMobileMenuOpen}
-            onClose={handleMobileMenuClose}
-        >
-
-            <MenuItem>
-                <Link to='/chat' className={classes.dropLinks}>
-                    <IconButton aria-label="show new mails" color="inherit">
-                        <Badge color="secondary">
-                            <MailIcon />
-                        </Badge>
-                    </IconButton>
-                    <span>Сообщения</span>
-                </Link>
-            </MenuItem>
-            <MenuItem onClick={handleProfileMenuOpen}>
-                <IconButton
-                    aria-label="account of current user"
-                    aria-controls="primary-search-account-menu"
-                    aria-haspopup="true"
-                    color="inherit"
-                >
-                    <AccountCircle />
-                </IconButton>
-                <span>Профиль</span>
-            </MenuItem>
-        </Menu>
-    );
-
-    return (
-        <div className={classes.grow}>
-            <MaterialUiAppBar position='static'>
-                <Toolbar>
-                    <Link to='/' className={classes.links}>
-                        <Button className={classes.linkButton}>
-                            Главная
-                        </Button>
-                    </Link>
-
-                    <Link to='/playground' className={classes.links}>
-                        <Button className={classes.linkButton}>
-                            Playground
-                        </Button>
-                    </Link>
-
-                    <div className={classes.grow} />
-                    <div className={classes.sectionDesktop}>
-                        <Link to='/chat' className={classes.links}>
-                            <IconButton aria-label="show new mails" color="inherit">
-                                <MailIcon />
-                            </IconButton>
-                        </Link>
-                        <IconButton
-                            edge="end"
-                            aria-label="account of current user"
-                            aria-controls={menuId}
-                            aria-haspopup="true"
-                            onClick={handleProfileMenuOpen}
-                            color="inherit"
-                        >
-                            <AccountCircle />
-                        </IconButton>
-                    </div>
-                    <div className={classes.sectionMobile}>
-                        <IconButton
-                            aria-label="show more"
-                            aria-controls={mobileMenuId}
-                            aria-haspopup="true"
-                            onClick={handleMobileMenuOpen}
-                            color="inherit"
-                        >
-                            <MoreIcon />
-                        </IconButton>
-                    </div>
-                </Toolbar>
-            </MaterialUiAppBar>
-            {renderMobileMenu}
-            {renderMenu}
+        <div className={classes.search}>
+          <div className={classes.searchIcon}>
+            <SearchIcon />
+          </div>
+          <InputBase
+            placeholder="Search…"
+            classes={{
+              root: classes.inputRoot,
+              input: classes.inputInput,
+            }}
+            inputProps={{ 'aria-label': 'search' }}
+          />
         </div>
-    );
-};
+      </Box>
 
-AppBar.propTypes = {
-    to: PropTypes.string.isRequired,
+      <Box className={classes.chatWrapper}>
+        {chats.map((chat) => (
+          <ChatPreview chat={chat} />
+        ))}
+      </Box>
+    </Drawer>
+  );
 };
 
 export default AppBar;

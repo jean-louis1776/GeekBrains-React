@@ -1,32 +1,61 @@
-import React from 'react';
-import '../styles/styles.css';
-import PropTypes from 'prop-types';
-// import { Scrollbar } from 'react-scrollbars-custom';
+import { makeStyles } from "@material-ui/core/styles";
+import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
+
+const useStyles = makeStyles(() => ({
+  messageList: {
+    width: "100%",
+    height: "93%",
+    borderBottom: "1px solid rgba(255, 255, 255, 0.12)",
+    overflow: "auto",
+    display: "flex",
+    flexDirection: "column",
+    padding: '20px'
+  },
+
+  senderMessage: {
+    alignSelf: "flex-start",
+    marginRight: '40%',
+    backgroundColor: "#A1A1A1",
+    borderRadius: '10px 10px 10px 0px',
+  },
+  userMessage: {
+    alignSelf: "flex-end",
+    marginLeft: '40%',
+    backgroundColor: "#198cff",
+    borderRadius: '10px 10px 0px 10px',
+  },
+
+  message: {
+    padding: "5px",
+    marginBottom: "10px",
+  },
+}));
 
 const MessageList = ({ messagesArray }) => {
-    return (
-        <div className="messageList">
+  const classes = useStyles();
+  const { myId } = useSelector((state) => state.chat);
 
-            {
-                messagesArray.map((message, i) => {
-                    const isMessageFromBot = message.author === 'Chat-bot Василий';
-
-                    return (
-                        <div className={isMessageFromBot ? 'botMessageBlock' : 'myMessageBlock'} key={i}>
-                            <div className={isMessageFromBot ? 'botMessageTag' : 'myMessageTag'}>{message.author} <br /> {message.time}</div>
-                            <div className={isMessageFromBot ? 'botMessage' : 'myMessage'} > {message.trimmedMessageText}</div>
-                        </div >
-                    )
-                })
-
-            }
-
-        </div >
-    );
+  return (
+    <div className={classes.messageList}>
+      {messagesArray.map((message, i) => (
+        <div
+          key={i}
+          className={`
+            ${message.userId === myId
+              ? classes.userMessage
+              : classes.senderMessage
+            } ${classes.message}`}
+        >
+          {message.text}
+        </div>
+      ))}
+    </div>
+  );
 };
 
 MessageList.propTypes = {
-    messagesArray: PropTypes.array.isRequired,
+  messagesArray: PropTypes.array.isRequired,
 };
 
 export default MessageList;

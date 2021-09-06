@@ -1,76 +1,59 @@
-import React, { useEffect } from 'react';
-import MessageList from './MessageList';
-import MessageInput from './MessageInput';
-import ChatList from './ChatList';
-import firstAvatar from '../img/1.jpg';
-import secondAvatar from '../img/2.jpg';
-import thirdAvatar from '../img/3.jpg';
-import '../styles/styles.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { addMessage } from './chatSlice'
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addMessage } from "./chatSlice";
+import MessageList from "./MessageList";
+import MessageInput from "./MessageInput";
+import { makeStyles } from "@material-ui/core/styles";
+import { useParams } from "react-router-dom";
+
+const useStyles = makeStyles((theme) => ({
+  chatWrapper: {
+    height: "100%",
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  componentWrapper: {
+    width: "600px",
+    height: "800px",
+    display: "flex",
+    flexDirection: "column",
+    backgroundColor: '#424242',
+    borderRadius: '10px',
+    boxShadow: '5px 5px 30px rgb(105,105,105,0.2)',
+  },
+}));
 
 function Chat() {
-  const dispatch = useDispatch();
-  const { messagesArray } = useSelector(state => state.chat);
+  const urlParams = useParams();
+  const chatId = Number.parseInt(urlParams.id);
 
-  const chatArray = [{
-    avatar: firstAvatar,
-    chatName: 'Brunch this weekend?',
-    id: 'Ali Connors',
-    chatText: ` — I'll be in your neighborhood doing errands this…`
-  },
-  {
-    avatar: secondAvatar,
-    chatName: 'Summer BBQ',
-    id: 'to Scott, Alex, Jennifer',
-    chatText: ` — Wish I could come, but I'm out of town this…`
-  },
-  {
-    avatar: thirdAvatar,
-    chatName: 'Oui Oui',
-    id: 'Sandra Adams',
-    chatText: ` — Do you have Paris recommendations? Have you ever…`
-  },
-  ];
+  const { chats } = useSelector((state) => state.chat);
+  const messagesArray = chats.find((chat) => chat.id === chatId).messagesArray;
+  const dispatch = useDispatch();
+
+  const classes = useStyles();
 
   const onSendMessage = (messageText) => {
-    const trimmedMessageText = messageText.trim();
-
-    if (trimmedMessageText !== '') {
-      dispatch(addMessage({
-        trimmedMessageText,
-        author: 'Илья Алексин',
-        time: new Date().toLocaleString()
-      }));
-
-      setTimeout(() => {
-        dispatch(addMessage({
-          trimmedMessageText: 'Сообщение отправлено!😊👌',
-          author: 'Chat-bot Василий',
-          time: new Date().toLocaleString()
-        }));
-      }, 1000);
-    };
+    dispatch(addMessage({ chatId, messageText }));
   };
 
   useEffect(() => {
-    document.getElementsByClassName("messageList")[0].scrollTop = 999999;
-  });
+    if (messagesArray.length > 0) {
+      setTimeout(() => { }, 1000);
+    }
+  }, [messagesArray]);
 
   return (
-    <div className='mainWrapper'>
-      <div className='componentWrapper'>
-        <ChatList chatArray={chatArray} />
-
-        <div className='chatWrapper'>
-
-          <MessageList messagesArray={messagesArray} />
-
-          <MessageInput onSendMessage={onSendMessage} />
-
-        </div >
+    <div className={classes.chatWrapper}>
+      <div className={classes.componentWrapper}>
+        <MessageList messagesArray={messagesArray} />
+        <MessageInput onSendMessage={onSendMessage} />
       </div>
     </div>
   );
-};
+}
+
 export default Chat;

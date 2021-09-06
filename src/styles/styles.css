@@ -84,7 +84,6 @@ body::after {
   padding: 20px 0;
   overflow: auto;
   scroll-behavior: smooth;
-  background-image: url(../img/chat_background.jpg);
   background-size: cover;
 }
 
