@@ -88,6 +88,19 @@ body::after {
   background-size: cover;
 }
 
+.messageList::-webkit-scrollbar {
+  width: 6px !important;
+  height: 6px !important;
+}
+
+.messageList::-webkit-scrollbar-thumb {
+  background-color: hsla(0, 0%, 100%, 0.5);
+}
+
+.messageList::-webkit-scrollbar-track {
+  background: hsla(0, 0%, 100%, 0);
+}
+
 .myMessageBlock {
   margin-bottom: 15px;
   margin-left: 40%;
