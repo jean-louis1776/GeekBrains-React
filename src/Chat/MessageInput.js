@@ -8,7 +8,7 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   input: {
     margin: "0px 15px 15px 15px",
-    width: "90%",
+    width: "95%",
   },
 
   button: {
@@ -40,14 +40,16 @@ const MessageInput = ({ onSendMessage }) => {
     <div className={classes.inputWrapper}>
       <TextField
         value={inputMessage}
-        label="Введите сообщение"
+        label="Введите сообщение..."
+        multiline
+        maxRows={3}
         onChange={(e) => setInputMessage(e.target.value)}
-        onKeyDown={({ key }) => {
-          if (key === "Enter") {
+        onKeyDown={(e) => {
+          if (!e.shiftKey && e.key === 'Enter') {
+            e.preventDefault();
             sendAndRemoveInput();
           }
         }}
-        // multiline
         classes={{
           root: classes.input,
         }}
