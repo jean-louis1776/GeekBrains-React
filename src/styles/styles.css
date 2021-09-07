@@ -10,32 +10,7 @@ body {
   font-family: "Roboto", sans-serif;
   display: flex;
   min-height: 100vh;
-  /* background: #061116;
-  color: #fff; */
-  /* overflow: hidden; */
 }
-
-/* body::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(#e91e63, #ffc107);
-  clip-path: circle(22% at 30% 20%);
-}
-
-body::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  /height: 100%;
-  background: linear-gradient(#ffffff, #da00ff);
-  clip-path: circle(20% at 70% 90%);
-} */
 
 #root {
   display: flex;
@@ -58,7 +33,6 @@ body::after {
   overflow: hidden;
   z-index: 10;
   box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.2);
-  /* background-color: #424242; */
 }
 
 .chatWrapper {
