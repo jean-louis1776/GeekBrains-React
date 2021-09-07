@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Box from "@material-ui/core/Box";
-import { Link, useLocation, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { alpha, makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -89,7 +89,6 @@ const useStyles = makeStyles((theme) => ({
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create('width'),
     width: '100%',
@@ -102,22 +101,29 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const routes = [
-  {
-    pathTitle: "Home",
-    path: "/home",
-  },
-  { pathTitle: "Chat", path: "/chat" },
-  { pathTitle: "Playground", path: "/playground" },
-  { pathTitle: "Profile", path: "/profile" },
-];
+// const routes = [
+//   {
+//     pathTitle: "Home",
+//     path: "/home",
+//   },
+//   {
+//     pathTitle: "Chat",
+//     path: "/chat"
+//   },
+//   {
+//     pathTitle: "Playground",
+//     path: "/playground"
+//   },
+//   {
+//     pathTitle: "Profile",
+//     path: "/profile"
+//   },
+// ];
 
 const AppBar = () => {
   const classes = useStyles();
-  const location = useLocation();
-  const history = useHistory();
 
-  const { chats } = useSelector((state) => state.chat);
+  const { profiles, messages } = useSelector((state) => state.chat);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -151,11 +157,17 @@ const AppBar = () => {
           anchorReference={"anchorPosition"}
         >
           <MenuItem key={1}>
+            <Link to='/' className={classes.dropLinks}>
+              Домой
+            </Link>
+          </MenuItem>
+          <MenuItem key={2}>
             <Link to='/profile' className={classes.dropLinks}>
               Профиль
             </Link>
           </MenuItem>
-          <MenuItem key={2}>Настройки</MenuItem>
+          <MenuItem key={3}>Настройки</MenuItem>
+          <MenuItem key={4}>Выйти</MenuItem>
         </Menu>
 
         <div className={classes.search}>
@@ -163,7 +175,7 @@ const AppBar = () => {
             <SearchIcon />
           </div>
           <InputBase
-            placeholder="Search…"
+            placeholder="Поиск…"
             classes={{
               root: classes.inputRoot,
               input: classes.inputInput,
@@ -174,8 +186,8 @@ const AppBar = () => {
       </Box>
 
       <Box className={classes.chatWrapper}>
-        {chats.map((chat) => (
-          <ChatPreview chat={chat} />
+        {profiles.map((profile) => (
+          <ChatPreview profile={profile} messages={messages[profile.id]} />
         ))}
       </Box>
     </Drawer>

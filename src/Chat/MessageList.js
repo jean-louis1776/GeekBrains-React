@@ -10,7 +10,20 @@ const useStyles = makeStyles(() => ({
     overflow: "auto",
     display: "flex",
     flexDirection: "column",
-    padding: '20px'
+    padding: '20px',
+
+    "&::-webkit-scrollbar": {
+      width: '6px !important',
+      height: '6px !important'
+    },
+
+    "&::-webkit-scrollbar-thumb": {
+      backgroundColor: 'hsla(0, 0%, 100%, 0.5)'
+    },
+
+    "&::-webkit-scrollbar-track": {
+      background: 'hsla(0, 0%, 100%, 0)'
+    },
   },
 
   senderMessage: {
@@ -42,7 +55,7 @@ const MessageList = ({ messagesArray }) => {
         <div
           key={i}
           className={`
-            ${message.userId === myId
+            ${message.authorId === myId
               ? classes.userMessage
               : classes.senderMessage
             } ${classes.message}`}

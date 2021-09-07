@@ -4,102 +4,58 @@ import moment from "moment";
 export const chatSlice = createSlice({
   name: "chat",
   initialState: {
-    messagesArray: [],
-    myId: 1,
-    chats: [
+    messages: {
+      2: [
+        {
+          timeStamp: moment("1995-12-17T20:21:00").valueOf(),
+          authorId: 2,
+          text: "Привет, я Витя!",
+        }
+      ],
+      3: [
+        {
+          timeStamp: moment("1995-12-17T18:24:00").valueOf(),
+          authorId: 3,
+          text: "Привет, я Ваня!",
+        }
+      ],
+    },
+    profiles: [
       {
         id: 2,
-        name: "Joe Doe",
-        avatarUrl: "https://material-ui.com/static/images/avatar/1.jpg",
-        messagesArray: [
-          {
-            timeStamp: moment("1995-12-17T03:21:00"),
-            userId: 1,
-            text: "Привет",
-            isRead: true,
-          },
-          {
-            timeStamp: moment("1995-12-17T03:24:00"),
-            userId: 2,
-            text: "Тебе тоже привет Joe, Тебе тоже привет Joe, Тебе тоже привет Joe, Тебе тоже привет Joe",
-            isRead: false,
-          },
-        ],
+        name: "Виктор Дибров",
+        avatar: "https://material-ui.com/static/images/avatar/1.jpg",
       },
       {
         id: 3,
         name: "Иван Кузнецов",
-        avatarUrl: "https://material-ui.com/static/images/avatar/2.jpg",
-        messagesArray: [
-          {
-            timeStamp: moment("1995-12-17T03:24:00"),
-            userId: 1,
-            text: "Привет",
-            isRead: true,
-          },
-          {
-            timeStamp: moment("1995-12-17T03:28:00"),
-            userId: 3,
-            text: "Тебе тоже привет Иван",
-            isRead: false,
-          },
-          {
-            timeStamp: moment("1995-12-17T03:28:00"),
-            userId: 3,
-            text: "Тебе тоже привет Иван",
-            isRead: false,
-          },
-          {
-            timeStamp: moment("1995-12-17T03:28:00"),
-            userId: 3,
-            text: "Тебе тоже привет Иван",
-            isRead: false,
-          },
-        ],
+        avatar: "https://material-ui.com/static/images/avatar/2.jpg",
       },
     ],
+
+    myId: 1,
   },
   reducers: {
     addMessage: (state, action) => {
-      const { chatId, messageText } = action;
-      const chatIndex = state.chats.findIndex((chat) => chat.userId === chatId);
-      const chat = state.chats[chatIndex];
+      const { chatId, messageText, authorId } = action.payload;
 
-      console.log(chat);
+      console.log(action);
 
-      const newChats = [...state.chats];
-
-      newChats.splice(chatIndex, 1);
-
-      state.chats = [
-        ...newChats,
-        {
-          ...chat,
-          messagesArray: [
-            ...chat.messagesArray,
-            {
-              text: messageText,
-              timeStamp: new moment(),
-              isRead: false,
-              userId: state.myId,
-            },
-          ],
-        },
-      ];
-
-      console.log(chatIndex);
-
-      // state.chats[chatIndex].messagesArray.push({
-      //   text: messageText,
-      //   timeStamp: new moment(),
-      //   isRead: false,
-      //   userId: state.myId,
-      // });
+      state.messages = {
+        ...state.messages,
+        [chatId]: [
+          ...state.messages[chatId],
+          {
+            timeStamp: moment().valueOf(),
+            authorId,
+            text: messageText,
+          },
+        ],
+      };
     },
   },
 });
 
-// Action creators are generated for each case reducer function
 export const { addMessage } = chatSlice.actions;
 
 export default chatSlice.reducer;
