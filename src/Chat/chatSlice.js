@@ -39,8 +39,6 @@ export const chatSlice = createSlice({
     addMessage: (state, action) => {
       const { chatId, messageText, authorId } = action.payload;
 
-      console.log(action);
-
       state.messages = {
         ...state.messages,
         [chatId]: [

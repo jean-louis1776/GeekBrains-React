@@ -92,7 +92,7 @@ const ChatPreview = ({ messages, profile }) => {
 
       <Box className={classes.rightContentWrapper}>
         <Typography variant="caption">
-          {moment(lastMessage.timeStamp).locale('ru').format("hh:mm")}
+          {moment(lastMessage.timeStamp).format("H:mm")}
         </Typography>
       </Box>
     </Box>

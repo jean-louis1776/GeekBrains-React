@@ -18,7 +18,8 @@ const useStyles = makeStyles(() => ({
     },
 
     "&::-webkit-scrollbar-thumb": {
-      backgroundColor: 'hsla(0, 0%, 100%, 0.5)'
+      backgroundColor: 'hsla(0, 0%, 100%, 0.5)',
+      borderRadius: '3px'
     },
 
     "&::-webkit-scrollbar-track": {
@@ -50,7 +51,7 @@ const MessageList = ({ messagesArray }) => {
   const { myId } = useSelector((state) => state.chat);
 
   return (
-    <div className={classes.messageList}>
+    <div className={`${classes.messageList} messageList`}>
       {messagesArray.map((message, i) => (
         <div
           key={i}
