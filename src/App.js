@@ -1,3 +1,4 @@
+import React, { useContext } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Chat from "./Chat";
 import Home from "./Home";
@@ -5,6 +6,7 @@ import AppBar from "./AppBar";
 import Profile from './Profile';
 import Cats from "./Cats";
 import News from "./News";
+import { MyDataContext } from './index';
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -17,6 +19,9 @@ const useStyles = makeStyles((theme) => ({
 
 const App = () => {
   const classes = useStyles();
+
+  const appVer = useContext(MyDataContext);
+  console.log('APP INFO: ', appVer);
 
   return (
     <Router>

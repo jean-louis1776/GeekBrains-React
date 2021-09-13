@@ -5,8 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
-import { NEWS_API_URL, setLoading, setError, setData } from "./newsSlice";
-
+import { getNews } from "./newsActions";
 
 const useStyles = makeStyles((theme) => ({
     wrapper: {
@@ -73,31 +72,6 @@ const useStyles = makeStyles((theme) => ({
         height: "100%",
     },
 }));
-
-
-export const getNews = () => async (dispatch, getState) => {
-    const { loading } = getState().news;
-    if (!loading) {
-        try {
-            dispatch(setError(false));
-            dispatch(setLoading(true));
-            const response = await fetch(NEWS_API_URL);
-            if (!response.ok) {
-                throw new Error('Something was wrong!');
-            }
-            const result = await response.json();
-
-            console.log(result);
-
-            dispatch(setData(result));
-        } catch (e) {
-            dispatch(setError(true));
-        } finally {
-            dispatch(setLoading(false));
-        }
-    }
-};
-
 
 const News = () => {
     const classes = useStyles();

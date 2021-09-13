@@ -1,12 +1,12 @@
-import { CAT_API_URL, setLoading, setError, setData } from "./catSlice";
+import { NEWS_API_URL, setLoading, setError, setData } from "./newsSlice";
 
-export const getCatPhoto = () => async (dispatch, getState) => {
-    const { loading } = getState().cats;
+export const getNews = () => async (dispatch, getState) => {
+    const { loading } = getState().news;
     if (!loading) {
         try {
             dispatch(setError(false));
             dispatch(setLoading(true));
-            const response = await fetch(CAT_API_URL);
+            const response = await fetch(NEWS_API_URL);
             if (!response.ok) {
                 throw new Error('Something was wrong!');
             }

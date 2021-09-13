@@ -10,7 +10,7 @@ import theme from "./theme";
 import store from "./store";
 
 export const MyDataContext = React.createContext({
-  appVersion: '0.5-alpha',
+  appVersion: '0.8-alpha',
   author: 'Ilya Aleksin'
 });
 
@@ -18,7 +18,7 @@ ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <MyDataContext.Provider value={{ appName: 'Hellogram', appVersion: '0.5-alpha', author: 'Ilya Aleksin' }}>
+      <MyDataContext.Provider value={{ appName: 'Hellogram', appVersion: '0.8-alpha', author: 'Ilya Aleksin' }}>
         <Provider store={store}>
           <App />
         </Provider>
