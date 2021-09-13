@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addMessage } from "./chatSlice";
+import { sendMessageWithThunk } from "./chatActions";
 import MessageList from "./MessageList";
 import MessageInput from "./MessageInput";
 import { makeStyles } from "@material-ui/core/styles";
@@ -16,8 +16,8 @@ const useStyles = makeStyles((theme) => ({
   },
 
   componentWrapper: {
-    width: "60vw",
-    height: "800px",
+    width: "75vw",
+    height: "90vh",
     display: "flex",
     flexDirection: "column",
     backgroundColor: '#424242',
@@ -25,23 +25,6 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: '5px 5px 30px rgb(105,105,105,0.2)',
   },
 }));
-
-
-const sendMessageWithThunk = (message) => (dispatch, getState) => {
-  const { chat } = getState();
-  const myId = chat.myId;
-  dispatch(addMessage(message));
-  if (message.authorId === myId) {
-    const botMessage = {
-      chatId: message.chatId,
-      messageText: 'Сообщение отправлено!😊👌',
-      authorId: message.chatId
-    };
-    setTimeout(() => {
-      dispatch(addMessage(botMessage));
-    }, 1100);
-  };
-};
 
 function Chat() {
   const urlParams = useParams();

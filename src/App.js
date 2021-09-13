@@ -3,6 +3,8 @@ import Chat from "./Chat";
 import Home from "./Home";
 import AppBar from "./AppBar";
 import Profile from './Profile';
+import Cats from "./Cats";
+import News from "./News";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -28,6 +30,14 @@ const App = () => {
 
           <Route path="/profile">
             <Profile />
+          </Route>
+
+          <Route path="/cats">
+            <Cats />
+          </Route>
+
+          <Route path="/news">
+            <News />
           </Route>
 
           <Route path="/">

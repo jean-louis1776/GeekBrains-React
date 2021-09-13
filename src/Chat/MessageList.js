@@ -11,20 +11,6 @@ const useStyles = makeStyles(() => ({
     display: "flex",
     flexDirection: "column",
     padding: '20px',
-
-    "&::-webkit-scrollbar": {
-      width: '6px !important',
-      height: '6px !important'
-    },
-
-    "&::-webkit-scrollbar-thumb": {
-      backgroundColor: 'hsla(0, 0%, 100%, 0.5)',
-      borderRadius: '3px'
-    },
-
-    "&::-webkit-scrollbar-track": {
-      background: 'hsla(0, 0%, 100%, 0)'
-    },
   },
 
   senderMessage: {

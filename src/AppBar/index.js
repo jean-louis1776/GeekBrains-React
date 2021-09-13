@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import Box from "@material-ui/core/Box";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { alpha, makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -11,14 +11,9 @@ import MenuItem from "@material-ui/core/MenuItem";
 import SearchIcon from "@material-ui/icons/Search";
 import ChatPreview from "./ChatPreview";
 import InputBase from '@material-ui/core/InputBase';
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
-  link: {
-    marginRight: "15px",
-    color: theme.palette.background.default,
-    textDecoration: "none",
-  },
-
   dropLinks: {
     textDecoration: 'none',
     color: theme.palette.text.primary,
@@ -101,27 +96,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// const routes = [
-//   {
-//     pathTitle: "Home",
-//     path: "/home",
-//   },
-//   {
-//     pathTitle: "Chat",
-//     path: "/chat"
-//   },
-//   {
-//     pathTitle: "Playground",
-//     path: "/playground"
-//   },
-//   {
-//     pathTitle: "Profile",
-//     path: "/profile"
-//   },
-// ];
-
 const AppBar = () => {
   const classes = useStyles();
+  const history = useHistory();
 
   const { profiles, messages } = useSelector((state) => state.chat);
 
@@ -156,18 +133,28 @@ const AppBar = () => {
           anchorPosition={{ top: 50, left: 25 }}
           anchorReference={"anchorPosition"}
         >
-          <MenuItem key={1}>
-            <Link to='/' className={classes.dropLinks}>
+          <MenuItem key={1} onClick={handleClose}>
+            <Link onClick={() => history.push("/")} className={classes.dropLinks}>
               Домой
             </Link>
           </MenuItem>
-          <MenuItem key={2}>
-            <Link to='/profile' className={classes.dropLinks}>
+          <MenuItem key={2} onClick={handleClose}>
+            <Link onClick={() => history.push("/news")} className={classes.dropLinks}>
+              Новости
+            </Link>
+          </MenuItem>
+          <MenuItem key={3} onClick={handleClose}>
+            <Link onClick={() => history.push("/cats")} className={classes.dropLinks}>
+              Котики
+            </Link>
+          </MenuItem>
+          <MenuItem key={4} onClick={handleClose}>
+            <Link onClick={() => history.push("/profile")} className={classes.dropLinks}>
               Профиль
             </Link>
           </MenuItem>
-          <MenuItem key={3}>Настройки</MenuItem>
-          <MenuItem key={4}>Выйти</MenuItem>
+          <MenuItem key={5}>Настройки</MenuItem>
+          <MenuItem key={6}>Выйти</MenuItem>
         </Menu>
 
         <div className={classes.search}>
