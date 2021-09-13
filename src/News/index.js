@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'space-evenly',
         width: '100%',
         height: '100%',
-        alignItems: 'center'
+        alignItems: 'center',
     },
 
     newsWrapper: {
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
         width: '60vw',
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
 
     errorText: {
@@ -39,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
         maxHeight: '81vh',
         maxWidth: '60vw',
         padding: '15px',
+        overflowX: 'hidden !important'
     },
 
     newsBox: {

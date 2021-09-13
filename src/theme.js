@@ -9,6 +9,12 @@ const theme = createTheme({
                 },
             },
         },
+
+        MuiFormLabel: {
+            "&:root": {
+                overflowX: 'clip'
+            }
+        },
     },
     palette: {
         type: 'dark',

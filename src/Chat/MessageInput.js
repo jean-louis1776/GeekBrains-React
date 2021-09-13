@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
+    overflowX: 'clip'
   },
 }));
 
