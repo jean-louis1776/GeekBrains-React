@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#424242',
     borderRadius: '10px',
     boxShadow: '5px 5px 30px rgb(105,105,105,0.2)',
+    margin: '0 25px'
   },
 }));
 
