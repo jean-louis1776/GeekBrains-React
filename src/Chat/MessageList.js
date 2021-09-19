@@ -38,18 +38,19 @@ const MessageList = ({ messagesArray }) => {
 
   return (
     <div className={`${classes.messageList} messageList`}>
-      {messagesArray.map((message, i) => (
-        <div
-          key={i}
-          className={`
+      {messagesArray &&
+        messagesArray.map((message, i) => (
+          <div
+            key={i}
+            className={`
             ${message.authorId === myId
-              ? classes.userMessage
-              : classes.senderMessage
-            } ${classes.message}`}
-        >
-          {message.text}
-        </div>
-      ))}
+                ? classes.userMessage
+                : classes.senderMessage
+              } ${classes.message}`}
+          >
+            {message.messageText}
+          </div>
+        ))}
     </div>
   );
 };

@@ -174,7 +174,10 @@ const AppBar = () => {
 
       <Box className={classes.chatWrapper}>
         {profiles.map((profile) => (
-          <ChatPreview profile={profile} messages={messages[profile.id]} />
+          <ChatPreview
+            profile={profile}
+            messages={messages[profile.id] || []}
+          />
         ))}
       </Box>
     </Drawer>
