@@ -8,6 +8,7 @@ import brandLogo from '../img/brandLogo.png';
 import { Button } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from "clsx";
+import { db } from '../App';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -102,6 +103,8 @@ const useStyles = makeStyles((theme) => ({
 const Signup = () => {
     const classes = useStyles();
 
+    const [name, setName] = useState("");
+    const [surname, setSurname] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -116,12 +119,24 @@ const Signup = () => {
         setEmail(e.target.value);
     };
 
+    const handleNameChange = (e) => {
+        setName(e.target.value);
+    };
+
+    const handleSurnameChange = (e) => {
+        setSurname(e.target.value);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
 
         try {
-            await firebase.auth().createUserWithEmailAndPassword(email, password);
+            const { user } = await firebase.auth().createUserWithEmailAndPassword(email, password);
+            db.ref('profile').child(user.uid).set({
+                name,
+                surname
+            });
             dispatch(changeIsAuth(true))
             history.push('/')
         } catch (error) {
@@ -139,6 +154,26 @@ const Signup = () => {
 
                 <form onSubmit={handleSubmit} className={classes.signUpForm}>
                     <h3 className={classes.formHeading}>Создайте свой аккаунт Hellogram</h3>
+                    <div className={classes.inputWrapper}>
+                        <input
+                            placeholder="Имя"
+                            name="name"
+                            type="name"
+                            onChange={handleNameChange}
+                            value={name}
+                            className={classes.input}
+                        />
+                    </div>
+                    <div className={classes.inputWrapper}>
+                        <input
+                            placeholder="Фамилия"
+                            name="surname"
+                            type="surname"
+                            onChange={handleSurnameChange}
+                            value={surname}
+                            className={classes.input}
+                        />
+                    </div>
                     <div className={classes.inputWrapper}>
                         <input
                             placeholder="E-mail"

@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { useAuthState } from 'react-firebase-hooks/auth';
 import Chat from "./Chat";
 import Home from "./Home";
 import Profile from './Profile';
@@ -17,7 +18,7 @@ const useStyles = makeStyles(() => ({
     width: "100vw",
     height: "100vh",
     display: "flex",
-  },
+  }
 }));
 
 const firebaseConfig = {
@@ -38,6 +39,10 @@ const App = () => {
 
   const appVer = useContext(MyDataContext);
   console.log('APP INFO: ', appVer);
+
+  const [user] = useAuthState(firebase.auth());
+
+  console.log('USER:', user);
 
   return (
     <Router>

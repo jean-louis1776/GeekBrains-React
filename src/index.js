@@ -18,7 +18,7 @@ ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <MyDataContext.Provider value={{ appName: 'Hellogram', appVersion: '0.8-alpha', author: 'Ilya Aleksin' }}>
+      <MyDataContext.Provider value={{ appName: 'Hellogram', appVersion: '0.10-alpha', author: 'Ilya Aleksin' }}>
         <Provider store={store}>
           <App />
         </Provider>
