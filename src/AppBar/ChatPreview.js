@@ -1,102 +1,64 @@
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
-import { makeStyles } from "@material-ui/core/styles";
 import { useHistory, useLocation } from "react-router-dom";
 import clsx from "clsx";
 import moment from "moment";
+import useStyles from '../styles/AppBar/ChatPreviewStyles';
+import { db } from '../App';
+import { useObjectVal } from 'react-firebase-hooks/database';
 
-
-const useStyles = makeStyles(() => ({
-  mainWrapper: {
-    width: "100%",
-    margin: "10px 0px",
-    padding: "10px",
-    display: "flex",
-    alignItems: "center",
-    borderRadius: "10px",
-    cursor: "pointer",
-    transition: "0.2s",
-
-    "&:hover": {
-      backgroundColor: "#5e5e5e",
-    }
-  },
-
-  selectedChat: {
-    backgroundColor: "#1e88e5",
-
-    "&:hover": {
-      backgroundColor: "#1e88e5",
-    },
-  },
-
-  midddleContentWrapper: {
-    marginLeft: "15px",
-    width: "65%",
-    height: "100%",
-  },
-
-  rightContentWrapper: {
-    flex: 1,
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "flex-end",
-    margin: "0px 10px",
-  },
-
-  overFlowText: {
-    textOverflow: "ellipsis",
-    overflow: "hidden",
-    whiteSpace: "nowrap",
-    width: "100%",
-    height: "30px",
-  },
-}));
-
-const ChatPreview = ({ messages, profile }) => {
+const ChatPreview = ({ uid }) => {
   const classes = useStyles();
   const history = useHistory();
   const location = useLocation();
 
-  const { avatar, name, id } = profile;
+  const [snapshot, loading, error] = useObjectVal(db.ref('profile').child(uid));
 
-  const locationSplitted = location.pathname.split("/");
+  if (loading) {
+    return <div>Loading</div>
+  };
 
-  const isSelected =
-    locationSplitted[1] === "chat" &&
-    Number.parseInt(locationSplitted[2]) === id;
+  if (error) {
+    return <div>Error</div>
+  };
 
-  const lastMessage =
-    messages.length > 0
-      ? messages[messages.length - 1]
-      : { text: "", timeStamp: null };
+  if (snapshot) {
+    const { name, surname } = snapshot;
 
-  return (
-    <Box
-      className={clsx(classes.mainWrapper, {
-        [classes.selectedChat]: isSelected,
-      })}
-      onClick={() => history.push(`/chat/${id}`)}
-    >
-      <Avatar alt="Profile Avatar" src={avatar} />
+    const locationSplitted = location.pathname.split("/");
 
-      <Box className={classes.midddleContentWrapper}>
-        <Typography variant="h6" className={classes.overFlowText}>
-          {name}
-        </Typography>
-        <Typography variant="subtitle1" className={classes.overFlowText}>
-          {lastMessage.text}
-        </Typography>
+    const isSelected =
+      locationSplitted[1] === "chat" && locationSplitted[2] === uid;
+
+    return (
+      <Box
+        className={clsx(classes.mainWrapper, {
+          [classes.selectedChat]: isSelected,
+        })}
+        onClick={() => history.push(`/chat/${uid}`)}
+      >
+        <Avatar alt="User Avatar" src={null} />
+
+        <Box className={classes.midddleContentWrapper}>
+          <Typography variant="h6" className={classes.overFlowText}>
+            {name} {surname}
+          </Typography>
+          <Typography variant="subtitle1" className={classes.overFlowText}>
+            {/* {lastMessage.text} */}
+          </Typography>
+        </Box>
+
+        <Box className={classes.rightContentWrapper}>
+          <Typography variant="caption">
+            {/* {moment(lastMessage.timeStamp).format("H:mm")} */}
+          </Typography>
+        </Box>
       </Box>
+    );
+  }
 
-      <Box className={classes.rightContentWrapper}>
-        <Typography variant="caption">
-          {moment(lastMessage.timeStamp).format("H:mm")}
-        </Typography>
-      </Box>
-    </Box>
-  );
+  return null;
 };
 
 export default ChatPreview;

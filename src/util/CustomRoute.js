@@ -10,7 +10,7 @@ import firebase from "firebase/compat/app";
 const CustomRoute = ({ secured, children, withAppBar = true, ...rest }) => {
     const { isAuthenticated, myUid } = useSelector((state) => state.chat);
 
-    const [user, loading, error] = useAuthState(firebase.auth());
+    const [user] = useAuthState(firebase.auth());
     const dispatch = useDispatch();
 
     useEffect(() => {

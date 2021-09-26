@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import Box from "@material-ui/core/Box";
 import { useHistory } from "react-router-dom";
-import { alpha, makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import MenuIcon from "@material-ui/icons/Menu";
 import IconButton from "@material-ui/core/IconButton";
@@ -11,96 +10,15 @@ import MenuItem from "@material-ui/core/MenuItem";
 import SearchIcon from "@material-ui/icons/Search";
 import ChatPreview from "./ChatPreview";
 import InputBase from '@material-ui/core/InputBase';
+import { TextField, Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
-
-const useStyles = makeStyles((theme) => ({
-  dropLinks: {
-    textDecoration: 'none',
-    color: theme.palette.text.primary,
-  },
-
-  appBar: {
-    marginBottom: "15px",
-  },
-
-  root: {
-    marginRight: "350px",
-  },
-
-  mainWrapper: {
-    width: "350px",
-    height: "100%",
-    padding: "10px 10px 0px 10px",
-  },
-
-  topComponent: {
-    width: "100%",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-
-  input: {
-    "& div": {
-      borderRadius: "40px",
-      "& input": {
-        padding: "10px 10px",
-      },
-    },
-  },
-
-  chatWrapper: {
-    width: "100%",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-
-  search: {
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    '&:hover': {
-      backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(1),
-      width: 'auto',
-    },
-  },
-  searchIcon: {
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  inputRoot: {
-    color: 'inherit',
-  },
-  inputInput: {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: '12ch',
-      '&:focus': {
-        width: '20ch',
-      },
-    },
-  },
-}));
+import useStyles from "../styles/AppBar/indexStyles";
 
 const AppBar = () => {
   const classes = useStyles();
   const history = useHistory();
 
-  const { profiles, messages } = useSelector((state) => state.chat);
+  const { chats, messages, myUid } = useSelector((state) => state.chat);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -112,6 +30,26 @@ const AppBar = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const [uID, setuID] = useState("");
+
+  const AddChat = () => {
+
+  };
+
+  // const handleLogOut = async (e) => {
+  //   e.preventDefault();
+  //   setError("");
+
+  //   try {
+  //     await firebase.auth().signOut()
+  //     dispatch(changeIsAuth(false));
+  //     history.push("/login");
+  //   } catch (error) {
+  //     setError(error.message);
+  //   }
+  // };
+
 
   return (
     <Drawer
@@ -144,17 +82,12 @@ const AppBar = () => {
             </Link>
           </MenuItem>
           <MenuItem key={3} onClick={handleClose}>
-            <Link onClick={() => history.push("/cats")} className={classes.dropLinks}>
-              Котики
-            </Link>
-          </MenuItem>
-          <MenuItem key={4} onClick={handleClose}>
             <Link onClick={() => history.push("/profile")} className={classes.dropLinks}>
               Профиль
             </Link>
           </MenuItem>
-          <MenuItem key={5}>Настройки</MenuItem>
-          <MenuItem key={6}>Выйти</MenuItem>
+          <MenuItem key={4}>Настройки</MenuItem>
+          <MenuItem key={5}>Выйти</MenuItem>
         </Menu>
 
         <div className={classes.search}>
@@ -168,17 +101,25 @@ const AppBar = () => {
               input: classes.inputInput,
             }}
             inputProps={{ 'aria-label': 'search' }}
+            value={uID}
+            onChange={(e) => setuID(e.target.value)}
           />
         </div>
       </Box>
 
       <Box className={classes.chatWrapper}>
-        {profiles.map((profile) => (
+        {chats.map((uid) => (
           <ChatPreview
-            profile={profile}
-            messages={messages[profile.id] || []}
+            // profile={profile}
+            uid={uid}
+          // messages={messages[profile.id] || []}
           />
         ))}
+      </Box>
+
+      <Box>
+        <TextField value={uID} onChange={(e) => setuID(e.target.value)} />
+        <Button onClick={AddChat}>Добавить</Button>
       </Box>
     </Drawer>
   );

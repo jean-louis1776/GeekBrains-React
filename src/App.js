@@ -1,10 +1,8 @@
 import React, { useContext } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { useAuthState } from 'react-firebase-hooks/auth';
 import Chat from "./Chat";
 import Home from "./Home";
 import Profile from './Profile';
-import Cats from "./Cats";
 import News from "./News";
 import CustomRoute from "./util/CustomRoute";
 import Login from './Auth/Login';
@@ -40,10 +38,6 @@ const App = () => {
   const appVer = useContext(MyDataContext);
   console.log('APP INFO: ', appVer);
 
-  const [user] = useAuthState(firebase.auth());
-
-  console.log('USER:', user);
-
   return (
     <Router>
       <div className={classes.mainWrapper}>
@@ -55,10 +49,6 @@ const App = () => {
 
           <CustomRoute secured withAppBar={true} path="/profile">
             <Profile />
-          </CustomRoute>
-
-          <CustomRoute secured withAppBar={true} path="/cats" >
-            <Cats />
           </CustomRoute>
 
           <CustomRoute secured withAppBar={true} path="/news">

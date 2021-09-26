@@ -6,99 +6,9 @@ import firebase from "firebase/compat/app";
 import Paper from '@material-ui/core/Paper';
 import brandLogo from '../img/brandLogo.png';
 import { Button } from "@material-ui/core";
-import { makeStyles } from '@material-ui/core/styles';
 import clsx from "clsx";
 import { db } from '../App';
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        display: 'flex',
-        alignItems: 'center',
-        width: '100%',
-        justifyContent: 'center',
-        '& > *': {
-            padding: '60px 110px'
-        },
-    },
-
-    signupWrapper: {
-        userSelect: 'none'
-    },
-
-    signUpHeading: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: '25px'
-    },
-
-    brandLogo: {
-        marginRight: '20px'
-    },
-
-    brandTitle: {
-        fontSize: '46px',
-        fontWeight: 200
-    },
-
-    signUpForm: {
-        display: 'flex',
-        alignItems: 'center',
-        flexDirection: 'column'
-    },
-
-    formHeading: {
-        fontWeight: 300,
-        marginBottom: '15px'
-    },
-
-    inputWrapper: {
-        marginBottom: '10px',
-        width: '100%',
-        display: 'flex',
-        justifyContent: 'center',
-    },
-
-    lastInput: {
-        marginBottom: '25px'
-    },
-
-    input: {
-        height: '50px',
-        width: '100%',
-        backgroundColor: theme.palette.background.paper,
-        outline: 'none',
-        color: theme.palette.text.primary,
-        fontSize: '20px',
-        fontFamily: 'Roboto',
-        fontWeight: 300,
-        padding: '5px',
-        border: 'none',
-        borderBottom: '1px solid'
-    },
-
-    buttonWrapper: {
-        marginBottom: '40px',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center'
-    },
-
-    error: {
-        marginBottom: '10px',
-        color: '#ff6e6e'
-    },
-
-    logIn: {
-        fontWeight: 300
-    },
-
-    logInLink: {
-        color: '#1e88e5',
-        textDecoration: 'none',
-        marginLeft: '10px'
-    }
-}));
+import useStyles from '../styles/Auth/SignupStyles';
 
 const Signup = () => {
     const classes = useStyles();
@@ -135,7 +45,9 @@ const Signup = () => {
             const { user } = await firebase.auth().createUserWithEmailAndPassword(email, password);
             db.ref('profile').child(user.uid).set({
                 name,
-                surname
+                surname,
+                email,
+                password
             });
             dispatch(changeIsAuth(true))
             history.push('/')

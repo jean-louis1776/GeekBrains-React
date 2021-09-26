@@ -7,19 +7,21 @@ export const chatSlice = createSlice({
     isAuthenticated: false,
     myUid: '',
     messages: {},
-    profiles: [
-      {
-        id: 2,
-        name: "Виктор Дибров",
-        avatar: "https://material-ui.com/static/images/avatar/1.jpg",
-      },
-      {
-        id: 3,
-        name: "Иван Кузнецов",
-        avatar: "https://material-ui.com/static/images/avatar/2.jpg",
-      },
+    chats: [
+      // {
+      //   id: 2,
+      //   name: "Виктор Дибров",
+      //   avatar: "https://material-ui.com/static/images/avatar/1.jpg",
+      // },
+      // {
+      //   id: 3,
+      //   name: "Иван Кузнецов",
+      //   avatar: "https://material-ui.com/static/images/avatar/2.jpg",
+      // },
+      'wexPl0gQpShJecxqLA1fq2JuOCH2',
+      'xdVYaBd3pnVcrSyKSJC6esgGSB73',
+      '3FjwiiPwMuQpkE2QBfuPkfWbxxC2'
     ],
-    myId: 1
   },
   reducers: {
     addMessage: (state, action) => {
