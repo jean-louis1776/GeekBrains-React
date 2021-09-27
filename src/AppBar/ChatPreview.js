@@ -13,11 +13,7 @@ const ChatPreview = ({ uid }) => {
   const history = useHistory();
   const location = useLocation();
 
-  const [snapshot, loading, error] = useObjectVal(db.ref('profile').child(uid));
-
-  if (loading) {
-    return <div>Loading</div>
-  };
+  const [snapshot, error] = useObjectVal(db.ref('profile').child(uid));
 
   if (error) {
     return <div>Error</div>

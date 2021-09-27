@@ -7,21 +7,7 @@ export const chatSlice = createSlice({
     isAuthenticated: false,
     myUid: '',
     messages: {},
-    chats: [
-      // {
-      //   id: 2,
-      //   name: "Виктор Дибров",
-      //   avatar: "https://material-ui.com/static/images/avatar/1.jpg",
-      // },
-      // {
-      //   id: 3,
-      //   name: "Иван Кузнецов",
-      //   avatar: "https://material-ui.com/static/images/avatar/2.jpg",
-      // },
-      'wexPl0gQpShJecxqLA1fq2JuOCH2',
-      'xdVYaBd3pnVcrSyKSJC6esgGSB73',
-      '3FjwiiPwMuQpkE2QBfuPkfWbxxC2'
-    ],
+    chats: {},
   },
   reducers: {
     addMessage: (state, action) => {
@@ -49,6 +35,13 @@ export const chatSlice = createSlice({
       };
     },
 
+    setChats: (state, action) => {
+      state.chats = {
+        ...state.chats,
+        ...action.payload
+      };
+    },
+
     changeIsAuth: (state, action) => {
       state.isAuthenticated = action.payload;
     },
@@ -59,6 +52,6 @@ export const chatSlice = createSlice({
   },
 });
 
-export const { addMessage, changeIsAuth, setMessages, setMyUid } = chatSlice.actions;
+export const { addMessage, changeIsAuth, setMessages, setMyUid, setChats } = chatSlice.actions;
 
 export default chatSlice.reducer;

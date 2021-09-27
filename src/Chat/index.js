@@ -25,20 +25,42 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: '5px 5px 30px rgb(105,105,105,0.2)',
     margin: '0 25px'
   },
+
+  errorPageWrapper: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%'
+  },
+
+  errorPageTitle: {
+    borderRadius: ' 13px',
+    padding: '2px 15px',
+    backgroundColor: '#424242',
+    fontWeight: 500
+  }
 }));
 
 function Chat() {
+  const classes = useStyles();
   const urlParams = useParams();
-  const chatId = Number.parseInt(urlParams.id);
+  const targetUid = urlParams.id;
+  const chats = useSelector((state) => state.chat.chats);
+  const targetProfileId = Object.keys(chats).find((profileId) => profileId);
+
+  const chatId = chats[targetProfileId] ? chats[targetProfileId].chatId : null;
 
   const messages = useSelector((state) => state.chat.messages[chatId]);
-  const myId = useSelector((state) => state.chat.myId);
+  const myUid = useSelector((state) => state.chat.myUid);
   const dispatch = useDispatch();
 
-  const classes = useStyles();
-
   const onSendMessage = (messageText) => {
-    dispatch(sendMessageWithThunk({ chatId, messageText, authorId: myId }));
+    dispatch(sendMessageWithThunk({
+      chatId,
+      messageText,
+      authorUid: myUid,
+      targetUid: targetUid
+    }));
   };
 
   useEffect(() => {
@@ -46,6 +68,14 @@ function Chat() {
       document.getElementsByClassName("messageList")[0].scrollTop = 999999;
     }
   });
+
+  if (!targetProfileId || !chatId) {
+    return (
+      <div className={classes.errorPageWrapper}>
+        <span className={classes.errorPageTitle}>Такого пользователя не существует!</span>
+      </div>
+    );
+  };
 
   return (
     <div className={classes.chatWrapper}>

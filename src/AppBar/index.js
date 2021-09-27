@@ -13,12 +13,13 @@ import InputBase from '@material-ui/core/InputBase';
 import { TextField, Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import useStyles from "../styles/AppBar/indexStyles";
+import { addChatToFirebase } from './actions';
 
 const AppBar = () => {
   const classes = useStyles();
   const history = useHistory();
 
-  const { chats, messages, myUid } = useSelector((state) => state.chat);
+  const { chats, myUid } = useSelector((state) => state.chat);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -31,10 +32,10 @@ const AppBar = () => {
     setAnchorEl(null);
   };
 
-  const [uID, setuID] = useState("");
+  const [uId, setuId] = useState("");
 
   const AddChat = () => {
-
+    addChatToFirebase(myUid, uId);
   };
 
   // const handleLogOut = async (e) => {
@@ -101,14 +102,14 @@ const AppBar = () => {
               input: classes.inputInput,
             }}
             inputProps={{ 'aria-label': 'search' }}
-            value={uID}
-            onChange={(e) => setuID(e.target.value)}
+            value={uId}
+            onChange={(e) => setuId(e.target.value)}
           />
         </div>
       </Box>
 
       <Box className={classes.chatWrapper}>
-        {chats.map((uid) => (
+        {Object.keys(chats).map((uid) => (
           <ChatPreview
             // profile={profile}
             uid={uid}
@@ -118,7 +119,7 @@ const AppBar = () => {
       </Box>
 
       <Box>
-        <TextField value={uID} onChange={(e) => setuID(e.target.value)} />
+        <TextField value={uId} onChange={(e) => setuId(e.target.value)} />
         <Button onClick={AddChat}>Добавить</Button>
       </Box>
     </Drawer>
